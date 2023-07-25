@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, createContext, useEffect } from 'react'
+import { Route, Routes } from "react-router-dom"
+import Main from './pages/Main'
+import List from './pages/List'
+import Navbar from './components/Navbar'
+import axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const AppContext = createContext()
+
+export default function App() {
+    const [data, setData] = useState("")
+    const getData = async () => {
+        let response = await axios.get('https://digimon-api.vercel.app/api/digimon')
+        let info = await response.data
+        setData(info)
+        // console.log(response.data[0].name)
+    }
+    useEffect(() => {
+        getData()
+    }, [])
+    return (
+        <div className='App'>
+            <AppContext.Provider value={{ data, setData }}>
+                <Navbar />
+                <Routes>
+                    <Route path='/' element={<Main />} />
+                    <Route path='/List' element={<List />} />
+                </Routes></AppContext.Provider>
+        </div>
+    )
 }
-
-export default App;

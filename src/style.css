@@ -1,0 +1,16 @@
+.navbar{
+    display:flex;
+    justify-content: space-around;
+}
+.digimon{
+    border:solid red;
+    display:flex;
+    justify-content: space-around;
+}
+.img{
+    height:100px;
+}
+.header{
+    text-align:center;
+    font-size:30px;
+}
